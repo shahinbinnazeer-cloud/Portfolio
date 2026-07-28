@@ -11,7 +11,7 @@
     <!-- Google Fonts & Font Awesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
@@ -36,6 +36,7 @@
             
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
+            --font-modern: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
             
             --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -346,11 +347,12 @@
         }
 
         .hero-content h1 {
+            font-family: var(--font-modern);
             font-size: 3.5rem;
-            font-weight: 800;
+            font-weight: 400;
             line-height: 1.1;
             margin-bottom: 1rem;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
             background: linear-gradient(90deg, #ffffff 20%, var(--primary) 40%, var(--secondary) 60%, #ffffff 80%);
             background-size: 250% auto;
             -webkit-background-clip: text;
@@ -365,9 +367,10 @@
         }
 
         .hero-subtitle {
-            font-size: 1.35rem;
+            font-size: 1.1rem;
             color: var(--primary);
-            font-family: var(--font-mono);
+            font-family: var(--font-modern);
+            font-weight: 400;
             margin-bottom: 1rem;
             min-height: 2rem;
         }
@@ -983,10 +986,6 @@
     <!-- Header Navigation -->
     <header id="header">
         <div class="nav-container">
-            <a href="#home" class="logo">
-                <i class="fa-solid fa-terminal" style="color: var(--primary);"></i>
-                &lt;SN<span>/&gt;</span>
-            </a>
             <div class="mobile-toggle" id="mobile-toggle">
                 <i class="fa-solid fa-bars"></i>
             </div>
@@ -1454,13 +1453,20 @@
                     <p style="color: var(--text-muted); margin-bottom: 2rem;">
                         Open for discussions regarding IT management consulting, high-availability deployments, or security implementations in the UAE.
                     </p>
-                    <div class="contact-info-item">
+                    <a href="mailto:shahinbinnazeer@gmail.com" class="contact-info-item" style="text-decoration: none; color: inherit;">
                         <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
                         <div>
                             <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Email</span>
-                            <strong style="font-size: 0.95rem;">contact@shahin-nazeer.com</strong>
+                            <strong style="font-size: 0.95rem;">shahinbinnazeer@gmail.com</strong>
                         </div>
-                    </div>
+                    </a>
+                    <a href="tel:+971567106246" class="contact-info-item" style="text-decoration: none; color: inherit;">
+                        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Phone</span>
+                            <strong style="font-size: 0.95rem;">+971 56 710 6246</strong>
+                        </div>
+                    </a>
                     <div class="contact-info-item">
                         <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
                         <div>
@@ -1468,26 +1474,26 @@
                             <strong style="font-size: 0.95rem;">Dubai, United Arab Emirates</strong>
                         </div>
                     </div>
-                    <div class="contact-info-item">
+                    <a href="https://www.linkedin.com/in/shahin-nazeer?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noopener noreferrer" class="contact-info-item" style="text-decoration: none; color: inherit;">
                         <div class="contact-icon"><i class="fa-brands fa-linkedin-in"></i></div>
                         <div>
                             <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">LinkedIn</span>
-                            <strong style="font-size: 0.95rem;">linkedin.com/in/shahinnazeer</strong>
+                            <strong style="font-size: 0.95rem;">linkedin.com/in/shahin-nazeer</strong>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <form class="contact-form" onsubmit="event.preventDefault(); alert('Message feature ready.');">
+                <form class="contact-form" action="https://formspree.io/f/xdaqbajz" method="POST">
                     <div class="form-group">
                         <label>Your Name</label>
-                        <input type="text" class="form-control" placeholder="Name" required>
+                        <input type="text" name="name" class="form-control" placeholder="Name" required>
                     </div>
                     <div class="form-group">
                         <label>Your Email</label>
-                        <input type="email" class="form-control" placeholder="email@domain.com" required>
+                        <input type="email" name="email" class="form-control" placeholder="email@domain.com" required>
                     </div>
                     <div class="form-group">
                         <label>Message</label>
-                        <textarea class="form-control" placeholder="Write your message..." required></textarea>
+                        <textarea name="message" class="form-control" placeholder="Write your message..." required></textarea>
                     </div>
                     <button type="submit" class="glow-btn" style="justify-content: center;"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
                 </form>
