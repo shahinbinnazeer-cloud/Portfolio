@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Shahin Nazeer - IT Infrastructure & Cybersecurity Engineer based in Dubai, UAE.">
+    <meta name="author" content="Shahin Nazeer">
+    
+    <title>Shahin Nazeer | IT Infrastructure & Cybersecurity Engineer</title>
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ==========================================================================
+           1. CORE STYLES & VARIABLES
+           ========================================================================== */
+        :root {
+            --bg-dark: #050811;
+            --bg-card: rgba(13, 18, 30, 0.55);
+            --bg-card-hover: rgba(21, 29, 46, 0.75);
+            --border-color: rgba(255, 255, 255, 0.07);
+            --border-highlight: rgba(0, 210, 255, 0.3);
+            
+            --primary: #00d2ff;
+            --primary-glow: rgba(0, 210, 255, 0.25);
+            --secondary: #3a7bd5;
+            --accent: #10b981;
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Subtle Background Mesh Grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.06) 0%, rgba(58, 123, 213, 0.02) 50%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+            transition: transform 0.2s ease-out;
+        }
+
+        /* ==========================================================================
+           2. REUSABLE UI COMPONENTS & ANIMATIONS
+           ========================================================================== */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-highlight);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(0, 210, 255, 0.15);
+        }
+
+        .section-padding {
+            padding: 7rem 2rem;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title p {
+            color: var(--primary);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Buttons */
+        .glow-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.75rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: #fff;
+            font-weight: 600;
+            border-radius: 10px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+
+        .glow-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(0, 210, 255, 0.45);
+        }
+
+        .outline-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .outline-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered cascade for grid items */
+        .skills-grid .reveal:nth-child(1), .cert-grid .reveal:nth-child(1), .projects-grid .reveal:nth-child(1) { transition-delay: 0.03s; }
+        .skills-grid .reveal:nth-child(2), .cert-grid .reveal:nth-child(2), .projects-grid .reveal:nth-child(2) { transition-delay: 0.09s; }
+        .skills-grid .reveal:nth-child(3), .cert-grid .reveal:nth-child(3), .projects-grid .reveal:nth-child(3) { transition-delay: 0.15s; }
+        .skills-grid .reveal:nth-child(4), .cert-grid .reveal:nth-child(4) { transition-delay: 0.21s; }
+        .skills-grid .reveal:nth-child(5), .cert-grid .reveal:nth-child(5) { transition-delay: 0.27s; }
+        .skills-grid .reveal:nth-child(6), .cert-grid .reveal:nth-child(6) { transition-delay: 0.33s; }
+        .skills-grid .reveal:nth-child(7) { transition-delay: 0.39s; }
+        .skills-grid .reveal:nth-child(8) { transition-delay: 0.45s; }
+        .skills-grid .reveal:nth-child(9) { transition-delay: 0.51s; }
+        .skills-grid .reveal:nth-child(10) { transition-delay: 0.57s; }
+        .skills-grid .reveal:nth-child(11) { transition-delay: 0.63s; }
+        .skills-grid .reveal:nth-child(12) { transition-delay: 0.69s; }
+        .timeline-item.reveal:nth-child(2) { transition-delay: 0.12s; }
+
+        /* ==========================================================================
+           3. NAVBAR
+           ========================================================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            transition: var(--transition-smooth);
+        }
+
+        header.scrolled {
+            background: rgba(5, 8, 17, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.25rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0%;
+            height: 1.5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.35s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 1.4rem;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        /* ==========================================================================
+           4. HERO SECTION
+           ========================================================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 6rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(0, 210, 255, 0.08);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 30px;
+            color: var(--primary);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+            background: linear-gradient(90deg, #ffffff 20%, var(--primary) 40%, var(--secondary) 60%, #ffffff 80%);
+            background-size: 250% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmerText 6s linear infinite;
+        }
+
+        @keyframes shimmerText {
+            0% { background-position: 0% center; }
+            100% { background-position: -250% center; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.35rem;
+            color: var(--primary);
+            font-family: var(--font-mono);
+            margin-bottom: 1rem;
+            min-height: 2rem;
+        }
+
+        .hero-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-description {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            max-width: 540px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Profile Frame */
+        .hero-image-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .profile-frame {
+            position: relative;
+            width: 330px;
+            height: 330px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 300% 300%;
+            padding: 3px;
+            backdrop-filter: blur(10px);
+            animation: borderFlow 6s ease infinite, floatY 5s ease-in-out infinite;
+        }
+
+        @keyframes borderFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-14px); }
+        }
+
+        .profile-inner {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            border-radius: 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-inner i {
+            font-size: 5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 22px;
+            filter: grayscale(15%) contrast(1.05);
+            transition: var(--transition-smooth);
+        }
+
+        .profile-frame:hover .profile-photo {
+            filter: grayscale(0%) contrast(1.1);
+            transform: scale(1.03);
+        }
+
+        .experience-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -10px;
+            background: rgba(13, 18, 30, 0.9);
+            border: 1px solid var(--border-highlight);
+            padding: 0.85rem 1.25rem;
+            border-radius: 14px;
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* ==========================================================================
+           5. STATS & VENDORS
+           ========================================================================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: -3rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: var(--font-mono);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Vendor Logos Marquee/Grid Section */
+        .vendor-section {
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .vendor-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .vendor-marquee {
+            width: 100%;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+        }
+
+        .vendor-logos {
+            display: flex;
+            align-items: center;
+            gap: 3.5rem;
+            width: max-content;
+            padding: 0.5rem 0;
+            animation: vendorScroll 22s ease-in-out infinite alternate;
+        }
+
+        .vendor-marquee:hover .vendor-logos {
+            animation-play-state: paused;
+        }
+
+        @keyframes vendorScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-38%); }
+        }
+
+        .vendor-item {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            opacity: 0.8;
+            filter: grayscale(30%);
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+
+        .vendor-item:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: translateY(-3px);
+        }
+
+        .vendor-item i, .vendor-item svg {
+            font-size: 1.5rem;
+            width: 24px;
+            height: 24px;
+        }
+
+        .vendor-badge {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            border: 1px solid var(--border-color);
+        }
+
+        /* ==========================================================================
+           6. SKILLS GRID
+           ========================================================================== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .skill-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .skill-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--primary);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+        }
+
+        .skill-card:hover .skill-icon {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border-color: var(--primary);
+            transform: scale(1.1) rotate(-6deg);
+        }
+
+        .cert-card:hover .cert-vendor-logo {
+            transform: scale(1.08) rotate(4deg);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
+        }
+
+        .cert-vendor-logo {
+            transition: var(--transition-smooth);
+        }
+
+        .skill-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .skill-info p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+        }
+
+        /* ==========================================================================
+           7. TIMELINE (EXPERIENCE)
+           ========================================================================== */
+        .timeline {
+            position: relative;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 14px;
+            top: 24px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-company {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-body ul {
+            list-style: none;
+        }
+
+        .timeline-body li {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.25rem;
+        }
+
+        .timeline-body li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        /* ==========================================================================
+           8. PROJECTS SECTION
+           ========================================================================== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.75rem;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(0, 210, 255, 0.08);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 0.25rem 0.65rem;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ==========================================================================
+           9. CERTIFICATIONS SECTION & LOGOS
+           ========================================================================== */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cert-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.5rem;
+        }
+
+        .cert-vendor-logo {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+        }
+
+        .cert-vendor-logo svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .cert-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .cert-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        /* ==========================================================================
+           10. CONTACT SECTION
+           ========================================================================== */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(0, 210, 255, 0.08);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .form-control {
+            background: rgba(5, 8, 17, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.85rem 1rem;
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* ==========================================================================
+           11. FOOTER
+           ========================================================================== */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2.5rem 0;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+        }
+
+        /* ==========================================================================
+           12. RESPONSIVE DESIGN
+           ========================================================================== */
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-badge, .hero-location, .hero-cta {
+                justify-content: center;
+            }
+
+            .hero-description {
+                margin: 0 auto 2rem auto;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: rgba(5, 8, 17, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition-smooth);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-toggle {
+                display: block;
+                z-index: 1000;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .profile-frame {
+                width: 260px;
+                height: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Grid & Interactive Glow -->
+    <div class="bg-grid"></div>
+    <div class="ambient-glow" id="ambient-glow"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Header Navigation -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <i class="fa-solid fa-terminal" style="color: var(--primary);"></i>
+                &lt;SN<span>/&gt;</span>
+            </a>
+            <div class="mobile-toggle" id="mobile-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero section-padding">
+            <div class="hero-grid">
+                <div class="hero-content reveal">
+                    <div class="hero-badge">
+                        <span class="pulse-dot"></span> Available for Enterprise Solutions
+                    </div>
+                    <h1>Shahin Nazeer</h1>
+                    <div class="hero-subtitle">
+                        <span id="typed-text"></span>
+                    </div>
+                    <div class="hero-location">
+                        <i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> Dubai, United Arab Emirates
+                    </div>
+                    <p class="hero-description">
+                        IT Engineer with 5+ years of UAE experience managing, securing, and optimizing enterprise IT infrastructure across Microsoft 365, Azure, and network security operations — specialized in VAPT, firewall management, and ISO/IEC 27001:2022 aligned architectures.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#contact" class="glow-btn"><i class="fa-solid fa-paper-plane"></i> Get In Touch</a>
+                        <a href="#projects" class="outline-btn"><i class="fa-solid fa-code"></i> View Projects</a>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper reveal">
+                    <div class="profile-frame">
+                        <div class="profile-inner">
+                            <img src="data:image/jpeg;base64,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" alt="Shahin Nazeer" class="profile-photo">
+                        </div>
+                    </div>
+                    <div class="experience-badge">
+                        <i class="fa-solid fa-award" style="color: var(--primary); font-size: 1.5rem;"></i>
+                        <div>
+                            <strong style="display: block; font-size: 0.95rem;">5+ Years</strong>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">Enterprise IT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Bar & Vendor Logos -->
+        <div class="section-padding" style="padding-top: 0; padding-bottom: 4rem;">
+            <div class="stats-grid glass-card reveal">
+                <div class="stat-card">
+                    <div class="stat-number" data-target="5">0</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="50">0</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="6">0</div>
+                    <div class="stat-label">Certifications</div>
+                </div>
+            </div>
+
+            <!-- Ecosystem / Vendor Stack Bar -->
+            <div class="vendor-section reveal">
+                <div class="vendor-label">Enterprise Vendors & Ecosystems Managed</div>
+                <div class="vendor-marquee">
+                    <div class="vendor-logos">
+                        <div class="vendor-item"><i class="fa-solid fa-network-wired" style="color: #00bceb;"></i> Cisco</div>
+                        <div class="vendor-item"><div class="vendor-badge" style="background: rgba(238,49,36,0.1); color:#ee3124; border-color: rgba(238,49,36,0.25);">FN</div> Fortinet</div>
+                        <div class="vendor-item"><div class="vendor-badge" style="background: rgba(238,49,36,0.1); color:#ee3124; border-color: rgba(238,49,36,0.25);">FG</div> FortiGate</div>
+                        <div class="vendor-item"><i class="fa-brands fa-microsoft" style="color: #f25022;"></i> Microsoft</div>
+                        <div class="vendor-item"><i class="fa-solid fa-cloud" style="color: #0089d6;"></i> Azure</div>
+                        <div class="vendor-item"><div class="vendor-badge" style="background: rgba(255,102,0,0.1); color:#ff6600; border-color: rgba(255,102,0,0.25);">SW</div> SonicWall</div>
+                        <div class="vendor-item"><i class="fa-solid fa-phone-volume" style="color: #ff4d4d;"></i> Avaya</div>
+                        <div class="vendor-item"><div class="vendor-badge" style="background: rgba(13,110,253,0.1); color:#5794ff; border-color: rgba(13,110,253,0.25);">UB</div> Unifi</div>
+                        <div class="vendor-item"><div class="vendor-badge" style="background: rgba(255,131,0,0.1); color:#ff8300; border-color: rgba(255,131,0,0.25);">AR</div> Aruba</div>
+                        <div class="vendor-item"><div class="vendor-badge" style="background: rgba(0,150,214,0.1); color:#0096d6; border-color: rgba(0,150,214,0.25);">HP</div> HP</div>
+                        <div class="vendor-item"><div class="vendor-badge" style="background: rgba(237,28,36,0.1); color:#ed1c24; border-color: rgba(237,28,36,0.25);">BD</div> Bitdefender</div>
+                        <div class="vendor-item"><div class="vendor-badge" style="background: rgba(0,210,255,0.1); color:#00d2ff; border-color: rgba(0,210,255,0.25);">PP</div> Perception Point</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <section id="about" class="section-padding">
+            <div class="section-title reveal">
+                <h2>Executive Profile</h2>
+                <p>// Systems & Security Architecture</p>
+            </div>
+            <div class="glass-card reveal" style="max-width: 880px; margin: 0 auto;">
+                <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                    I am an IT Engineer and Infrastructure & Security Specialist based in Dubai, UAE, with 5+ years of experience managing, securing, and optimizing enterprise IT infrastructure across Microsoft 365, Azure cloud environments, and network security operations.
+                </p>
+                <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.8;">
+                    I'm experienced in deploying and managing enterprise-grade firewalls (SonicWall, FortiGate), Windows Server environments (2016/2019/2022), and hybrid cloud solutions — with a specialization in cybersecurity: Vulnerability Assessment & Penetration Testing (VAPT), cyber threat intelligence, security incident response, and proactive threat hunting. I have a proven track record implementing secure, scalable network architectures aligned with ISO/IEC 27001:2022, covering firewall management, IDS/IPS, VPN configurations, and IAM.
+                </p>
+            </div>
+        </section>
+
+        <!-- Technical Skills Section -->
+        <section id="skills" class="section-padding">
+            <div class="section-title reveal">
+                <h2>Technical Stack</h2>
+                <p>// Core Competencies</p>
+            </div>
+            <div class="skills-grid">
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-brands fa-microsoft"></i></div>
+                    <div class="skill-info">
+                        <h4>Microsoft 365</h4>
+                        <p>Exchange & Cloud</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-cloud"></i></div>
+                    <div class="skill-info">
+                        <h4>Microsoft Azure</h4>
+                        <p>Cloud Infrastructure</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-fingerprint"></i></div>
+                    <div class="skill-info">
+                        <h4>Entra ID</h4>
+                        <p>Identity & Access</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="skill-info">
+                        <h4>FortiGate</h4>
+                        <p>NGFW & SD-WAN</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="skill-info">
+                        <h4>SonicWall</h4>
+                        <p>Network Security</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-network-wired"></i></div>
+                    <div class="skill-info">
+                        <h4>Cisco Networking</h4>
+                        <p>Routing & Switching</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-user-secret"></i></div>
+                    <div class="skill-info">
+                        <h4>VAPT & Red Team</h4>
+                        <p>Vulnerability Assessment</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                    <div class="skill-info">
+                        <h4>Microsoft Intune</h4>
+                        <p>MDM / Endpoint</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-server"></i></div>
+                    <div class="skill-info">
+                        <h4>Windows Server</h4>
+                        <p>AD DS, DNS, DHCP</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-terminal"></i></div>
+                    <div class="skill-info">
+                        <h4>PowerShell</h4>
+                        <p>Automation Scripts</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-database"></i></div>
+                    <div class="skill-info">
+                        <h4>Veeam Backup</h4>
+                        <p>DR & Recovery</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-user-shield"></i></div>
+                    <div class="skill-info">
+                        <h4>EDR Solutions</h4>
+                        <p>Endpoint Defense</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-hard-drive"></i></div>
+                    <div class="skill-info">
+                        <h4>NAS Management</h4>
+                        <p>Storage & Backup</p>
+                    </div>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i class="fa-solid fa-certificate"></i></div>
+                    <div class="skill-info">
+                        <h4>ISO 27001 & GDPR</h4>
+                        <p>Compliance & Audits</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section-padding">
+            <div class="section-title reveal">
+                <h2>Career History</h2>
+                <p>// Professional Experience</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-card">
+                        <div class="timeline-date">JUNE 2025 - PRESENT</div>
+                        <div class="timeline-title">IT Engineer</div>
+                        <div class="timeline-company">Intello Protect Technology | Dubai, UAE</div>
+                        <div class="timeline-body">
+                            <ul>
+                                <li>Design and deploy end-to-end network infrastructure including LAN/WAN architecture, routing protocols, switching configurations, and network segmentation strategies.</li>
+                                <li>Provision and optimize Azure cloud resources including virtual machines, storage accounts, virtual networks, and PaaS services aligned with business requirements.</li>
+                                <li>Configure and manage enterprise-grade firewalls and VPNs (SonicWall, FortiGate) ensuring robust network security.</li>
+                                <li>Administer Microsoft 365 portal including license management, mailbox configuration, and Azure AD user management.</li>
+                                <li>Deploy and manage email security solutions to protect against phishing, malware, and data breaches.</li>
+                                <li>Conduct infrastructure and web application vulnerability assessments with comprehensive remediation strategies.</li>
+                                <li>Support IT compliance initiatives including ISO 27001, HIPAA, and GDPR certifications through internal audits and control implementation.</li>
+                                <li>Manage Windows Server environments (2016/2019/2022) including installation, configuration, patch management, and performance optimization.</li>
+                                <li>Deploy and manage endpoint detection and response (EDR) solutions including configuration, policy enforcement, and threat remediation.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="glass-card">
+                        <div class="timeline-date">APRIL 2021 - JUNE 2025</div>
+                        <div class="timeline-title">IT In Charge / Information Technology Support Engineer</div>
+                        <div class="timeline-company">Lulu Retail | Dubai, UAE &nbsp;·&nbsp; 4 years 3 months</div>
+                        <div class="timeline-body">
+                            <ul>
+                                <li>Managed IT asset inventory and monitored server performance to ensure optimal operational efficiency.</li>
+                                <li>Served as first point of contact for all IT-related issues and service requests, providing timely technical support.</li>
+                                <li>Configured new laptops, desktops, printers, and copiers for seamless integration into the retail environment.</li>
+                                <li>Performed POS system image installation and configuration to support retail operations.</li>
+                                <li>Troubleshot and maintained Portable Data Terminal (PDT) devices with custom organizational software.</li>
+                                <li>Coordinated Windows and software patch updates ensuring system security and stability.</li>
+                                <li>Administered SAP transactions for retail operations including physical inventory control and variance calculations.</li>
+                                <li>Maintained Active Directory user management with monthly audits and compliance reviews.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section-padding">
+            <div class="section-title reveal">
+                <h2>Key Implementations</h2>
+                <p>// Selected Projects</p>
+            </div>
+            <div class="projects-grid">
+                <div class="glass-card project-card reveal">
+                    <div>
+                        <div class="project-header">
+                            <div class="project-icon-box"><i class="fa-solid fa-robot"></i></div>
+                        </div>
+                        <div class="project-title">Cybersecurity AI Agent Deployment</div>
+                        <p class="project-desc">Participated in team deployment of automated AI agent threat monitoring combined with on-premises security appliances for rapid threat mitigation.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">AI Security</span>
+                        <span class="tag">On-Premises</span>
+                        <span class="tag">SOC</span>
+                    </div>
+                </div>
+                <div class="glass-card project-card reveal">
+                    <div>
+                        <div class="project-header">
+                            <div class="project-icon-box"><i class="fa-solid fa-key"></i></div>
+                        </div>
+                        <div class="project-title">Hybrid Identity & Zero-Trust Migration</div>
+                        <p class="project-desc">Designed and deployed Microsoft Entra ID infrastructure with MFA, PIM, and granular Conditional Access to secure remote and hybrid workforces.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Entra ID</span>
+                        <span class="tag">M365</span>
+                        <span class="tag">Zero Trust</span>
+                    </div>
+                </div>
+                <div class="glass-card project-card reveal">
+                    <div>
+                        <div class="project-header">
+                            <div class="project-icon-box"><i class="fa-solid fa-shield-cat"></i></div>
+                        </div>
+                        <div class="project-title">Multi-Site FortiGate Modernization</div>
+                        <p class="project-desc">Upgraded legacy networks to high-availability FortiGate firewall clusters featuring SD-WAN routing and encrypted IPsec mesh connections.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">FortiGate</span>
+                        <span class="tag">SD-WAN</span>
+                        <span class="tag">IPsec VPN</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications" class="section-padding">
+            <div class="section-title reveal">
+                <h2>Certifications</h2>
+                <p>// Vendor Credentials</p>
+            </div>
+            <div class="cert-grid">
+                <!-- Microsoft Azure Administrator Associate -->
+                <div class="glass-card cert-card reveal">
+                    <div class="cert-vendor-logo">
+                        <svg viewBox="0 0 24 24" fill="#0089d6">
+                            <path d="M11.4 1.6 2 6.8v10.4l9.4 5.2 9.4-5.2V6.8L11.4 1.6zm0 2.5 6.8 3.8-6.8 3.8-6.8-3.8 6.8-3.8zM4.3 8.7l5.8 3.2v6.6l-5.8-3.2V8.7zm14.1 6.6-5.8 3.2v-6.6l5.8-3.2v6.6z"/>
+                        </svg>
+                    </div>
+                    <div class="cert-info">
+                        <h4>Azure Administrator Associate</h4>
+                        <p>Microsoft Certified</p>
+                    </div>
+                </div>
+
+                <!-- ISO/IEC 27001:2022 Lead Auditor -->
+                <div class="glass-card cert-card reveal">
+                    <div class="cert-vendor-logo">
+                        <svg viewBox="0 0 24 24" fill="#10b981">
+                            <path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                        </svg>
+                    </div>
+                    <div class="cert-info">
+                        <h4>ISO/IEC 27001:2022</h4>
+                        <p>Lead Auditor</p>
+                    </div>
+                </div>
+
+                <!-- Certified Red Team Operations Management -->
+                <div class="glass-card cert-card reveal">
+                    <div class="cert-vendor-logo">
+                        <svg viewBox="0 0 24 24" fill="#ef4444">
+                            <path d="M12 2 4 6v6c0 5 3.4 9.4 8 10.5 4.6-1.1 8-5.5 8-10.5V6l-8-4zm3.7 8.7-4.2 4.2a1 1 0 0 1-1.4 0l-2-2a1 1 0 1 1 1.4-1.4l1.3 1.3 3.5-3.5a1 1 0 1 1 1.4 1.4z"/>
+                        </svg>
+                    </div>
+                    <div class="cert-info">
+                        <h4>CRTOM</h4>
+                        <p>Certified Red Team Ops Management</p>
+                    </div>
+                </div>
+
+                <!-- FCP-FortiGate 7.4 Administrator -->
+                <div class="glass-card cert-card reveal">
+                    <div class="cert-vendor-logo">
+                        <svg viewBox="0 0 24 24" fill="#ee3124">
+                            <path d="M2 4h20v4H2zm0 6h20v4H2zm0 6h20v4H2z"/>
+                        </svg>
+                    </div>
+                    <div class="cert-info">
+                        <h4>FCP – FortiGate 7.4</h4>
+                        <p>Administrator</p>
+                    </div>
+                </div>
+
+                <!-- Microsoft 365 Admin Centre Training -->
+                <div class="glass-card cert-card reveal">
+                    <div class="cert-vendor-logo">
+                        <svg viewBox="0 0 24 24">
+                            <path fill="#f25022" d="M1 1h10v10H1z"/>
+                            <path fill="#7fba00" d="M13 1h10v10H13z"/>
+                            <path fill="#00a4ef" d="M1 13h10v10H1z"/>
+                            <path fill="#ffb900" d="M13 13h10v10H13z"/>
+                        </svg>
+                    </div>
+                    <div class="cert-info">
+                        <h4>Microsoft 365 Admin Centre</h4>
+                        <p>Administration Training</p>
+                    </div>
+                </div>
+
+                <!-- Mastercard Cybersecurity Job Simulation -->
+                <div class="glass-card cert-card reveal">
+                    <div class="cert-vendor-logo">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="9" cy="12" r="7" fill="#eb001b" opacity="0.85"/>
+                            <circle cx="15" cy="12" r="7" fill="#f79e1b" opacity="0.85"/>
+                        </svg>
+                    </div>
+                    <div class="cert-info">
+                        <h4>Mastercard</h4>
+                        <p>Cybersecurity Job Simulation</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education & Professional Training -->
+            <div class="section-title reveal" style="margin-top: 5rem;">
+                <h2 style="font-size: 1.6rem;">Education & Training</h2>
+                <p>// Foundations</p>
+            </div>
+            <div class="cert-grid">
+                <div class="glass-card cert-card reveal">
+                    <div class="cert-vendor-logo">
+                        <i class="fa-solid fa-graduation-cap" style="font-size: 1.6rem; color: var(--primary);"></i>
+                    </div>
+                    <div class="cert-info">
+                        <h4>Bachelor of Computer Application</h4>
+                        <p>Bharathiar University · 2016 – 2019</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <div class="cert-vendor-logo">
+                        <svg viewBox="0 0 24 24" fill="#00bceb">
+                            <path d="M12 3a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0V4a1 1 0 0 0-1-1zm-6 3a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0V7a1 1 0 0 0-1-1zm12 0a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0V7a1 1 0 0 0-1-1zm-9 3a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0v-4a1 1 0 0 0-1-1zm6 0a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0v-4a1 1 0 0 0-1-1zM2 18h20v2H2z"/>
+                        </svg>
+                    </div>
+                    <div class="cert-info">
+                        <h4>Cisco CCNA</h4>
+                        <p>Soften Technologies · Nov 2019 – May 2020</p>
+                    </div>
+                </div>
+                <div class="glass-card cert-card reveal">
+                    <div class="cert-vendor-logo">
+                        <svg viewBox="0 0 24 24">
+                            <path fill="#f25022" d="M1 1h10v10H1z"/>
+                            <path fill="#7fba00" d="M13 1h10v10H13z"/>
+                            <path fill="#00a4ef" d="M1 13h10v10H1z"/>
+                            <path fill="#ffb900" d="M13 13h10v10H13z"/>
+                        </svg>
+                    </div>
+                    <div class="cert-info">
+                        <h4>Microsoft Certified Server Expert</h4>
+                        <p>Soften Technologies · May 2020 – Nov 2020</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section-padding">
+            <div class="section-title reveal">
+                <h2>Get In Touch</h2>
+                <p>// Connect & Collaborate</p>
+            </div>
+            <div class="contact-container glass-card reveal">
+                <div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Let's Talk Infrastructure</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                        Open for discussions regarding IT management consulting, high-availability deployments, or security implementations in the UAE.
+                    </p>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Email</span>
+                            <strong style="font-size: 0.95rem;">contact@shahin-nazeer.com</strong>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Location</span>
+                            <strong style="font-size: 0.95rem;">Dubai, United Arab Emirates</strong>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">LinkedIn</span>
+                            <strong style="font-size: 0.95rem;">linkedin.com/in/shahinnazeer</strong>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Message feature ready.');">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" class="form-control" placeholder="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Your Email</label>
+                        <input type="email" class="form-control" placeholder="email@domain.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea class="form-control" placeholder="Write your message..." required></textarea>
+                    </div>
+                    <button type="submit" class="glow-btn" style="justify-content: center;"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Shahin Nazeer. Engineered with precision.</p>
+    </footer>
+
+    <!-- ==========================================================================
+       JAVASCRIPT LOGIC
+       ========================================================================== -->
+    <script>
+        // --- 1. Ambient Glow Mouse Follower ---
+        const ambientGlow = document.getElementById('ambient-glow');
+        window.addEventListener('mousemove', (e) => {
+            ambientGlow.style.transform = `translate(${e.clientX - 300}px, ${e.clientY - 300}px)`;
+        });
+
+        // --- 2. Interactive Mesh Canvas ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.radius = 1.2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 210, 255, 0.4)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 110) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 210, 255, ${0.15 * (1 - dist / 110)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // --- 3. Typing Text Effect ---
+        const phrases = [
+            "IT Infrastructure Engineer",
+            "Cybersecurity Specialist",
+            "Microsoft 365 & Azure Administrator",
+            "FortiGate Firewall Engineer"
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedTextElement = document.getElementById('typed-text');
+
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typedTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 30 : 70;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2200;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 400;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+        document.addEventListener('DOMContentLoaded', typeEffect);
+
+        // --- 4. Scroll Reveal Animations ---
+        const revealElements = document.querySelectorAll('.reveal');
+
+        function checkReveal() {
+            const triggerBottom = window.innerHeight * 0.88;
+            revealElements.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < triggerBottom) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', checkReveal);
+        checkReveal(); // Initial check
+
+        // --- 5. Animated Number Counter ---
+        let statsCounted = false;
+        const statsSection = document.querySelector('.stats-grid');
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !statsCounted) {
+                    statsCounted = true;
+                    document.querySelectorAll('.stat-number').forEach(stat => {
+                        const target = parseInt(stat.getAttribute('data-target'));
+                        let current = 0;
+                        const timer = setInterval(() => {
+                            current++;
+                            stat.textContent = current + '+';
+                            if (current >= target) clearInterval(timer);
+                        }, 50);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statsObserver.observe(statsSection);
+
+        // --- 6. Navigation Scroll & Mobile Toggle ---
+        const header = document.getElementById('header');
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
+    </script>
+</body>
+</html>
